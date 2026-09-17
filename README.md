@@ -315,7 +315,12 @@ cmake -S . -B build -G "Visual Studio 17 2022" -A x64
 cmake --build build --config Release
 ```
 
-Two optional SDKs, neither vendored (I11), both manual downloads:
+Two optional SDKs, neither vendored (I11). For a local build they are manual
+downloads; the release workflow fetches them itself — the DLSS SDK from
+NVIDIA's public repository at a pinned commit, the Optical Flow headers from a
+repository secret (see *Cutting a release* below). The runtime DLLs are a
+different matter: they are not SDKs, the build never needs them, and the
+release archive already carries them.
 
 | | |
 |---|---|
