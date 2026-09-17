@@ -331,6 +331,25 @@ by their English source text, so editing an English string orphans its
 translation silently — nothing fails to build and nothing looks wrong until
 somebody switches language. This check is what catches that, and it runs in CI.
 
+### Cutting a release
+
+A tag is the release. Set `VERSION` in `CMakeLists.txt`, write the section in
+`CHANGELOG.md`, and push `vX.Y.Z` on `main`; `.github/workflows/release.yml`
+does the rest and publishes to **Releases**. It needs both SDKs, and the
+Optical Flow SDK is not public, so the repository has to supply its two headers
+as a secret — about 15 KB, no hosting involved:
+
+```powershell
+Compress-Archive third_party/Optical-Flow-SDK/NvOFInterface nvof.zip
+gh secret set NVOF_SDK_B64 --body ([Convert]::ToBase64String([IO.File]::ReadAllBytes('nvof.zip')))
+```
+
+The four third-party binaries are fetched from the archive the 0.1.2 release
+was made of and checked against digests pinned in the workflow; a repository
+variable `THIRD_PARTY_BUNDLE_URL` points the job somewhere else if that asset
+ever goes away. The job refuses to publish if a digest, the version, or the
+changelog section is wrong, rather than shipping something quietly different.
+
 ---
 
 ## Interface language

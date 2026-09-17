@@ -115,6 +115,18 @@ answered that it could not find any instance of Visual Studio, and the job died
 at configure. The build, the tests and the invariant check had not run on any
 commit for weeks.
 
+**A tag publishes the release.** Pushing `vX.Y.Z` builds both executables with
+both NVIDIA SDKs present — the job refuses to run without either, because a
+build missing one starts, reports a neural pass and never runs it — runs the
+tests and the invariant checks against the binaries about to ship, takes the
+four third-party binaries from the archive the 0.1.2 release was made of and
+checks each against a digest pinned in the workflow, and publishes the archive
+with a `SHA256SUMS.txt` covering every file in it. The tag has to match the
+`VERSION` in `CMakeLists.txt` and the changelog has to have a section for it;
+either missing stops the job before anything is published. The shipped
+`sidecar.toml` now lives in the tree, and a test reads it the way the manager
+does and checks it is still the Recommended preset.
+
 ---
 
 ## 0.1.2

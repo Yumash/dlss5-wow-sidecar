@@ -32,12 +32,16 @@ add_executable(sidecar_tests
   test_utf8.cpp
   test_config_paths.cpp
   test_i18n.cpp
+  test_shipped_config.cpp
   ../src/manager/Install.cpp
   ../src/manager/Probes.cpp
   ../src/manager/WowInstall.cpp
   ../src/runtime/Pipeline.cpp
   ../src/testpattern/Pattern.cpp)
 target_include_directories(sidecar_tests PRIVATE ../src)
+# The shipped-config test reads assets/sidecar.toml out of the tree, because
+# the file is not built into anything and would otherwise go stale unnoticed.
+target_compile_definitions(sidecar_tests PRIVATE SIDECAR_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 target_link_libraries(sidecar_tests PRIVATE sidecar_common Catch2::Catch2WithMain)
 
 # The capture test launches testpattern.exe, which CreateProcess resolves from

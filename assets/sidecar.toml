@@ -1,0 +1,24 @@
+# DLSS 5 Sidecar. Edit through the manager's Tuning tab rather than by hand;
+# it rewrites this file. This is the "Recommended" preset, and it ships in the
+# release archive so the first launch is the tuned one.
+neural_pass = "reshade"
+dlss_preset = "cnn-f"
+show_hud = true
+show_overlay = true
+flow_grid_size = 4
+synthetic_depth = 0.50
+neural_passes = 1
+ui_mask_feather = 0
+
+[neural]
+enable_hooks = 2
+intensity = 1.00
+color_strength = 1.00
+transfer_strength = 1.00
+paper_white_scale = 1.00
+preset = 0
+style = 0
+upscaling = false
+local_structure = -1.00
+local_tone = -1.00
+skin_structure = -1.00
